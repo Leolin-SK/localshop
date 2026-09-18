@@ -9,7 +9,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-COPY composer.json composer.lock ./
+COPY . .
 
 RUN composer install \
     --no-dev \
@@ -18,8 +18,7 @@ RUN composer install \
     --no-scripts \
     --ignore-platform-reqs
 
-COPY . .
+RUN mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache \
+    && chmod -R 777 storage bootstrap/cache
 
-RUN composer dump-autoload --optimize --no-interaction
-
-CMD php artisan config:cache && php artisan migrate --force && php -S 0.0.0.0:$PORT -t public
+CMD php artisan migrate --force && php -S 0.0.0.0:$PORT -t public
