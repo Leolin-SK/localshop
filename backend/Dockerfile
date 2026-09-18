@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
     git unzip libpq-dev libzip-dev \
@@ -18,7 +18,7 @@ RUN composer install \
     --no-scripts \
     --ignore-platform-reqs
 
-RUN mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache \
+RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
 CMD php artisan migrate --force && php -S 0.0.0.0:$PORT -t public
