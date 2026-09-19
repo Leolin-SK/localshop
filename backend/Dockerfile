@@ -21,4 +21,4 @@ RUN composer install \
 RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
-CMD php artisan migrate --force && php artisan db:seed --force && php -S 0.0.0.0:$PORT -t public
+CMD php artisan migrate --force && php -S 0.0.0.0:$PORT -t public
